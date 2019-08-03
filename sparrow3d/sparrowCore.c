@@ -432,7 +432,6 @@ inline static int spHandleEvent(void (*spEvent)(SDL_Event *e))
 	int counter = 0;
 #endif
 	SDL_Event event;
-	int jhat_value = -1;
 	while (SDL_PollEvent(&event) == 1)
 	{
 #ifdef CORE_DEBUG
@@ -519,42 +518,35 @@ inline static int spHandleEvent(void (*spEvent)(SDL_Event *e))
 				spGenericInput.button[event.jbutton.button] = 1;
 			break;
 		case SDL_JOYHATMOTION:
-			if (event.jhat.value & SDL_HAT_CENTERED)
+			switch (event.jhat.value)
 			{
-				if (jhat_value >= 0)
-				{
+				case SDL_HAT_LEFT:
+				case SDL_HAT_LEFTUP:
+					spGenericInput.button[SP_BUTTON_LEFT] = 1;
+					break;
+
+				case SDL_HAT_RIGHT:
+				case SDL_HAT_RIGHTDOWN:
+					spGenericInput.button[SP_BUTTON_RIGHT] = 1;
+					break;
+
+				case SDL_HAT_UP:
+				case SDL_HAT_RIGHTUP:
+					spGenericInput.button[SP_BUTTON_UP] = 1;
+					break;
+
+				case SDL_HAT_DOWN:
+				case SDL_HAT_LEFTDOWN:
+					spGenericInput.button[SP_BUTTON_DOWN] = 1;
+					break;
+
+				case SDL_HAT_CENTERED:
 					spGenericInput.button[SP_BUTTON_LEFT] = 0;
 					spGenericInput.button[SP_BUTTON_UP] = 0;
 					spGenericInput.button[SP_BUTTON_RIGHT] = 0;
 					spGenericInput.button[SP_BUTTON_DOWN] = 0;
-					jhat_value = -1;
-				}
+					break;
 			}
-			else
-			{
-				if (event.jhat.value & SDL_HAT_UP)
-				{
-					jhat_value = SP_BUTTON_UP;
-				}
-
-				else if (event.jhat.value & SDL_HAT_LEFT)
-				{
-					jhat_value = SP_BUTTON_LEFT;
-				}
-
-				else if (event.jhat.value & SDL_HAT_RIGHT)
-				{
-					jhat_value = SP_BUTTON_RIGHT;
-				}
-				else if (event.jhat.value & SDL_HAT_DOWN)
-				{
-					jhat_value = SP_BUTTON_DOWN;
-				}
-				if(jhat_value>0) {
-					spGenericInput.button[jhat_value] = 1;
-				}
-			}
-
 			break;
 		case SDL_JOYBUTTONUP:
 #ifdef F100
