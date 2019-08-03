@@ -524,6 +524,9 @@ inline static int spHandleEvent(void (*spEvent)(SDL_Event *e))
 				if (jhat_value >= 0)
 				{
 					spGenericInput.button[SP_BUTTON_LEFT] = 0;
+					spGenericInput.button[SP_BUTTON_UP] = 0;
+					spGenericInput.button[SP_BUTTON_RIGHT] = 0;
+					spGenericInput.button[SP_BUTTON_DOWN] = 0;
 					jhat_value = -1;
 				}
 			}
