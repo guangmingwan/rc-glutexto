@@ -522,29 +522,33 @@ inline static int spHandleEvent(void (*spEvent)(SDL_Event *e))
 			{
 				case SDL_HAT_LEFT:
 				case SDL_HAT_LEFTUP:
-					spGenericInput.button[SP_BUTTON_LEFT] = 1;
+					spGenericInput.axis[0] = -1;
+        	                        spGenericInput.analog_axis[0] = SP_ANALOG_AXIS_MIN;
+	                                spLastAxisType = 0;
 					break;
 
 				case SDL_HAT_RIGHT:
 				case SDL_HAT_RIGHTDOWN:
-					spGenericInput.button[SP_BUTTON_RIGHT] = 1;
+					spGenericInput.axis[0] = 1;
+       		                         spGenericInput.analog_axis[0] = SP_ANALOG_AXIS_MAX;
+	                                spLastAxisType = 0;
 					break;
 
 				case SDL_HAT_UP:
 				case SDL_HAT_RIGHTUP:
-					spGenericInput.button[SP_BUTTON_UP] = 1;
+					 spGenericInput.axis[1] = -1;
+                                spGenericInput.analog_axis[1] = SP_ANALOG_AXIS_MIN;
+                                spLastAxisType = 0;
 					break;
 
 				case SDL_HAT_DOWN:
 				case SDL_HAT_LEFTDOWN:
-					spGenericInput.button[SP_BUTTON_DOWN] = 1;
+					spGenericInput.axis[1] = 1;
+                                spGenericInput.analog_axis[1] = SP_ANALOG_AXIS_MAX;
+                                spLastAxisType = 0;
 					break;
 
 				case SDL_HAT_CENTERED:
-					spGenericInput.button[SP_BUTTON_LEFT] = 0;
-					spGenericInput.button[SP_BUTTON_UP] = 0;
-					spGenericInput.button[SP_BUTTON_RIGHT] = 0;
-					spGenericInput.button[SP_BUTTON_DOWN] = 0;
 					break;
 			}
 			break;
