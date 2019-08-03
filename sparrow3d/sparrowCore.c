@@ -149,6 +149,9 @@ PREFIX void spInitCore( void )
 #elif defined DINGUX
 	spWindowX = 320;
 	spWindowY = 240;
+#elif defined RETROCARNIVAL
+	spWindowX = 480;
+	spWindowY = 320;
 #elif defined GCW
 	spWindowX = 320;
 	spWindowY = 240;
@@ -219,6 +222,8 @@ PREFIX void spInitCore( void )
 	spGenericInput.supports_keyboard = 0;
 #elif defined DINGUX
 	spGenericInput.supports_keyboard = 0;
+#elif defined RETROCARNIVAL
+	spGenericInput.supports_keyboard = 0;
 #elif defined GCW
 	spGenericInput.supports_keyboard = 0;
 #else // PANDORA and PCs
@@ -281,8 +286,12 @@ PREFIX void spResizeWindow( int x, int y, int fullscreen, int allowresize )
 	spWindowY = y;
 	spZoom = spMin( ( spWindowX << SP_ACCURACY ) / 320, ( spWindowY << SP_ACCURACY ) / 240 ); //at 320x240 == 1.0
 	SDL_ShowCursor( SDL_DISABLE );
+
+	
 	if (recallSelectRenderTarget)
 	  spSelectRenderTarget(spGetWindowSurface());
+
+	printf( "SDL_SetVideoMode done" );
 }
 
 PREFIX SDL_Surface* spCreateWindow( int width, int height, int fullscreen, int allowresize )

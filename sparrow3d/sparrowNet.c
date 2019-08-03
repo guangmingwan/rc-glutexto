@@ -1466,6 +1466,8 @@ int already_in_highscore(spNetC4AScorePointer scoreList,spNetC4AProfilePointer p
 	#define SET_SYSTEM(system) sprintf(system,"wiz");
 #elif defined(DINGUX)
 	#define SET_SYSTEM(system) sprintf(system,"dingux");
+#elif defined(RETROCARNIVAL)
+	#define SET_SYSTEM(system) sprintf(system,"retrocarnival");	
 #elif defined(GCW)
 	#define SET_SYSTEM(system) sprintf(system,"gcw");
 #elif defined(PANDORA)
