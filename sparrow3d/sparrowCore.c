@@ -521,6 +521,7 @@ inline static int spHandleEvent(void (*spEvent)(SDL_Event *e))
 		case SDL_JOYHATMOTION:
 			if (event.jhat.value > 0)
 			{
+				printf("set jhat_value:%d\n",event.jhat.value)
 				jhat_value = event.jhat.value;
 			}
 			switch (event.jhat.value)
@@ -554,6 +555,7 @@ inline static int spHandleEvent(void (*spEvent)(SDL_Event *e))
 				break;
 
 			case SDL_HAT_CENTERED:
+				printf("jhat_value is:%d\n",jhat_value);
 				switch (jhat_value)
 				{
 				case SDL_HAT_LEFT:
