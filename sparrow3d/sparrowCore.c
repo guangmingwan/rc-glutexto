@@ -432,6 +432,7 @@ inline static int spHandleEvent( void ( *spEvent )( SDL_Event *e ) )
 	int counter = 0;
 #endif
 	SDL_Event event;
+	int jhat_value = -1;
 	while ( SDL_PollEvent( &event ) == 1 )
 	{
 #ifdef CORE_DEBUG
@@ -508,6 +509,18 @@ inline static int spHandleEvent( void ( *spEvent )( SDL_Event *e ) )
 					else
 			  #endif
 				spGenericInput.button[event.jbutton.button] = 1;
+				break;
+			case SDL_JOYHATMOTION:
+				if (event->jhat.value & SDL_HAT_CENTERED) {
+					if(jhat_value>=0) {
+						spGenericInput.button[jhat_value] = 0;
+					}
+				}
+				else {
+					jhat_value = event->jhat.value;
+					spGenericInput.button[jhat_value] = 1;
+				}
+				
 				break;
 			case SDL_JOYBUTTONUP:
 			  #ifdef F100
