@@ -432,6 +432,7 @@ inline static int spHandleEvent(void (*spEvent)(SDL_Event *e))
 	int counter = 0;
 #endif
 	SDL_Event event;
+	int jhat_value = -1;
 	while (SDL_PollEvent(&event) == 1)
 	{
 #ifdef CORE_DEBUG
@@ -518,38 +519,81 @@ inline static int spHandleEvent(void (*spEvent)(SDL_Event *e))
 				spGenericInput.button[event.jbutton.button] = 1;
 			break;
 		case SDL_JOYHATMOTION:
+			if (event.jhat.value > 0)
+			{
+				jhat_value = event.jhat.value;
+			}
 			switch (event.jhat.value)
 			{
+			case SDL_HAT_LEFT:
+			case SDL_HAT_LEFTUP:
+				spGenericInput.axis[0] = -1;
+				spGenericInput.analog_axis[0] = SP_ANALOG_AXIS_MIN;
+				spLastAxisType = 0;
+				break;
+
+			case SDL_HAT_RIGHT:
+			case SDL_HAT_RIGHTDOWN:
+				spGenericInput.axis[0] = 1;
+				spGenericInput.analog_axis[0] = SP_ANALOG_AXIS_MAX;
+				spLastAxisType = 0;
+				break;
+
+			case SDL_HAT_UP:
+			case SDL_HAT_RIGHTUP:
+				spGenericInput.axis[1] = -1;
+				spGenericInput.analog_axis[1] = SP_ANALOG_AXIS_MIN;
+				spLastAxisType = 0;
+				break;
+
+			case SDL_HAT_DOWN:
+			case SDL_HAT_LEFTDOWN:
+				spGenericInput.axis[1] = 1;
+				spGenericInput.analog_axis[1] = SP_ANALOG_AXIS_MAX;
+				spLastAxisType = 0;
+				break;
+
+			case SDL_HAT_CENTERED:
+				switch (jhat_value)
+				{
 				case SDL_HAT_LEFT:
 				case SDL_HAT_LEFTUP:
-					spGenericInput.axis[0] = -1;
-        	                        spGenericInput.analog_axis[0] = SP_ANALOG_AXIS_MIN;
-	                                spLastAxisType = 0;
+					if (spGenericInput.axis[0] == -1 || spGenericInput.analog_axis[0] < 0)
+					{
+						spGenericInput.axis[0] = 0;
+						spGenericInput.analog_axis[0] = 0;
+						spLastAxisType = 0;
+					}
 					break;
-
 				case SDL_HAT_RIGHT:
 				case SDL_HAT_RIGHTDOWN:
-					spGenericInput.axis[0] = 1;
-       		                         spGenericInput.analog_axis[0] = SP_ANALOG_AXIS_MAX;
-	                                spLastAxisType = 0;
+					if (spGenericInput.axis[0] == 1 || spGenericInput.analog_axis[0] > 0)
+					{
+						spGenericInput.axis[0] = 0;
+						spGenericInput.analog_axis[0] = 0;
+						spLastAxisType = 0;
+					}
 					break;
-
 				case SDL_HAT_UP:
 				case SDL_HAT_RIGHTUP:
-					 spGenericInput.axis[1] = -1;
-                                spGenericInput.analog_axis[1] = SP_ANALOG_AXIS_MIN;
-                                spLastAxisType = 0;
+					if (spGenericInput.axis[1] == -1 || spGenericInput.analog_axis[1] < 0)
+					{
+						spGenericInput.axis[1] = 0;
+						spGenericInput.analog_axis[1] = 0;
+						spLastAxisType = 0;
+					}
 					break;
-
 				case SDL_HAT_DOWN:
 				case SDL_HAT_LEFTDOWN:
-					spGenericInput.axis[1] = 1;
-                                spGenericInput.analog_axis[1] = SP_ANALOG_AXIS_MAX;
-                                spLastAxisType = 0;
+					if (spGenericInput.axis[1] == 1 || spGenericInput.analog_axis[1] > 0)
+					{
+						spGenericInput.axis[1] = 0;
+						spGenericInput.analog_axis[1] = 0;
+						spLastAxisType = 0;
+					}
 					break;
-
-				case SDL_HAT_CENTERED:
-					break;
+				}
+				break;
 			}
 			break;
 		case SDL_JOYBUTTONUP:
