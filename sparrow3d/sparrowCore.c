@@ -519,7 +519,7 @@ inline static int spHandleEvent(void (*spEvent)(SDL_Event *e))
 				spGenericInput.button[event.jbutton.button] = 1;
 			break;
 		case SDL_JOYHATMOTION:
-			if (event->jhat.value & SDL_HAT_CENTERED)
+			if (event.jhat.value & SDL_HAT_CENTERED)
 			{
 				if (jhat_value >= 0)
 				{
@@ -528,21 +528,21 @@ inline static int spHandleEvent(void (*spEvent)(SDL_Event *e))
 			}
 			else
 			{
-				if (event->jhat.value & SDL_HAT_UP)
+				if (event.jhat.value & SDL_HAT_UP)
 				{
 					jhat_value = SP_BUTTON_UP;
 				}
 
-				else if (event->jhat.value & SDL_HAT_LEFT)
+				else if (event.jhat.value & SDL_HAT_LEFT)
 				{
 					jhat_value = SP_BUTTON_LEFT;
 				}
 
-				else if (event->jhat.value & SDL_HAT_RIGHT)
+				else if (event.jhat.value & SDL_HAT_RIGHT)
 				{
 					jhat_value = SP_BUTTON_RIGHT;
 				}
-				else if (event->jhat.value & SDL_HAT_DOWN)
+				else if (event.jhat.value & SDL_HAT_DOWN)
 				{
 					jhat_value = SP_BUTTON_DOWN;
 				}
