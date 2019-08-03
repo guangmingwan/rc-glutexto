@@ -523,7 +523,7 @@ inline static int spHandleEvent(void (*spEvent)(SDL_Event *e))
 			{
 				if (jhat_value >= 0)
 				{
-					spGenericInput.button[jhat_value] = 0;
+					spGenericInput.button[SP_BUTTON_LEFT] = 0;
 					jhat_value = -1;
 				}
 			}
@@ -547,8 +547,9 @@ inline static int spHandleEvent(void (*spEvent)(SDL_Event *e))
 				{
 					jhat_value = SP_BUTTON_DOWN;
 				}
-
-				spGenericInput.button[jhat_value] = 1;
+				if(jhat_value>0) {
+					spGenericInput.button[jhat_value] = 1;
+				}
 			}
 
 			break;
