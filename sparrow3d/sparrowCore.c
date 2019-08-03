@@ -67,6 +67,7 @@ Sint32 spVirtualKeyboardShift = 0;
 SDL_keysym spLastKey = {0, (SDLKey)0, (SDLMod)0, 0};
 SDL_keysym spVirtualLastKey = {0, (SDLKey)0, (SDLMod)0, 0};
 int spLastKeyCountDown = 0;
+int jhat_value = -1;
 int spVirtualLastKeyCountDown = 0;
 char spVirtualKeyboardMap[3][20] =
 	{{'\"', '#', '$', '%', '!', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', SDLK_BACKSPACE, '7', '8', '9', '-'},
@@ -432,7 +433,6 @@ inline static int spHandleEvent(void (*spEvent)(SDL_Event *e))
 	int counter = 0;
 #endif
 	SDL_Event event;
-	int jhat_value = -1;
 	while (SDL_PollEvent(&event) == 1)
 	{
 #ifdef CORE_DEBUG
@@ -521,7 +521,7 @@ inline static int spHandleEvent(void (*spEvent)(SDL_Event *e))
 		case SDL_JOYHATMOTION:
 			if (event.jhat.value > 0)
 			{
-				printf("set jhat_value:%d\n",event.jhat.value)
+				printf("set jhat_value:%d\n",event.jhat.value);
 				jhat_value = event.jhat.value;
 			}
 			switch (event.jhat.value)
